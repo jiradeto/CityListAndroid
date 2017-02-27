@@ -14,6 +14,6 @@ public interface HomeView {
 
     void onFailure(String appErrorMessage);
 
-    void showCity(CityListResponse cityListResponse);
+    void setData(CityListResponse cityListResponse);
 
 }

@@ -15,10 +15,9 @@ public class HomePresenter {
     private CompositeSubscription compositeSubscription;
 
 
-    public HomePresenter(Service service, HomeView view, CompositeSubscription compositeSubscription) {
+    public HomePresenter(Service service, HomeView view) {
         this.service = service;
         mView = view;
-        this.compositeSubscription = compositeSubscription;
     }
 
     void getCityList() {
@@ -28,7 +27,7 @@ public class HomePresenter {
             @Override
             public void onSuccess(CityListResponse cityListResponse) {
                 mView.hideProgress();
-                mView.showCity(cityListResponse);
+                mView.setData(cityListResponse);
             }
 
             @Override
