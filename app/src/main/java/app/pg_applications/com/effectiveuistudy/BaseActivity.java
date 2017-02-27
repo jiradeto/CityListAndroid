@@ -2,7 +2,9 @@ package app.pg_applications.com.effectiveuistudy;
 
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import java.io.File;
 
@@ -16,17 +18,19 @@ import app.pg_applications.com.effectiveuistudy.networking.NetworkModule;
 
 public class BaseActivity extends AppCompatActivity {
 
-    Deps dep;
+    Deps deps;
+
+    private static final String TAG = "BaseActivity";
 
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         File cacheFile = new File(getCacheDir(), "responses");
 
-        DaggerDeps.builder().networkModule(new NetworkModule(cacheFile)).build();
+        deps = DaggerDeps.builder().networkModule(new NetworkModule(cacheFile)).build();
     }
 
     public Deps getDep() {
-        return dep;
+        return deps;
     }
 }

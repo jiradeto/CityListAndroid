@@ -2,6 +2,7 @@ package app.pg_applications.com.effectiveuistudy.home;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +18,14 @@ import java.util.List;
 import app.pg_applications.com.effectiveuistudy.R;
 import app.pg_applications.com.effectiveuistudy.models.CityListData;
 
+
 /**
  * Created by jiradet on 2/27/2017 AD.
  */
 
 public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private static final String TAG = "HomeAdapter";
     private Context mContext;
     private List<CityListData> data = new ArrayList<>();
     private CustomClickListenerr listener;
@@ -34,6 +37,7 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        Log.e(TAG, "POND: >>>>>>>");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_home, null);
         view.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
         return new ViewHolder(view);
@@ -41,6 +45,8 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+
+        Log.e(TAG, "onBindViewHolder: >>>>>>>");
 
         ViewHolder v = (ViewHolder) holder;
 
@@ -83,9 +89,11 @@ public class HomeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
     }
 
-    public void setData(CityListData newData) {
+    public void setData(List<CityListData> newData) {
+
         if (newData != null) {
-            data.add(newData);
+            data.addAll(newData);
+            notifyDataSetChanged();
         }
 
     }

@@ -25,6 +25,7 @@ public class MainActivity extends BaseActivity implements HomeView {
 
     @BindView(R.id.progress_main)
     ProgressBar mProgressBar;
+
     @Inject
     Service mService;
     private HomeAdapter mAdapter;
@@ -32,6 +33,7 @@ public class MainActivity extends BaseActivity implements HomeView {
     private HomeAdapter.CustomClickListenerr listenerr;
     private HomePresenter mPresenter;
 
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,23 +41,22 @@ public class MainActivity extends BaseActivity implements HomeView {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        getDep().inject(this);
         initInstance();
-
     }
 
     private void initInstance() {
-        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
         mPresenter = new HomePresenter(mService, this);
 
         mAdapter = new HomeAdapter(new HomeAdapter.CustomClickListenerr() {
             @Override
             public void onClick(CityListData Item) {
                 Toast.makeText(MainActivity.this, Item.getName().toString(), Toast.LENGTH_SHORT).show();
-
             }
         }, this);
-        getDep().inject(this);
 
+        mRecycleView.setLayoutManager(new LinearLayoutManager(this));
+        mRecycleView.setAdapter(mAdapter);
         mPresenter.getCityList();
     }
 
@@ -78,6 +79,6 @@ public class MainActivity extends BaseActivity implements HomeView {
 
     @Override
     public void setData(CityListResponse cityListResponse) {
-
+        mAdapter.setData(cityListResponse.getData());
     }
 }
